@@ -1,0 +1,241 @@
+@import "./style.css";
+
+html {
+	background: var(--color-foreground-variant);
+}
+
+body {
+	--pad: 50px;
+
+	width: calc(100% - var(--pad) * 2);
+	height: calc(100% - var(--pad) * 2);
+
+	margin: calc(var(--pad) / 2);
+	border: none;
+	border-radius: 50px;
+	padding: calc(var(--pad) / 2);
+
+	overflow-y: hidden;
+
+	background: var(--color-background);
+
+	display: grid;
+	gap: 15px;
+	grid:
+		"name tools" 40px
+		"filter filter" 25px
+		"contents contents" auto
+		/ auto 1fr;
+}
+
+	body > div {
+		width: 100%;
+		height: 100%;
+	}
+
+#options {
+	display: block;
+	width: 30px;
+	height: 30px;
+
+	border-radius: 12px;
+	padding: 2px;
+
+	position: absolute;
+	top: 3px;
+	right: 3px;
+
+	font-size: 30px;
+	line-height: 30px;
+
+	user-select: none;
+}
+
+	#options:hover {
+		background: var(--color-primary);
+	}
+
+	#options:active {
+		background: none;
+	}
+
+#name {
+	grid-area: name;
+
+	cursor: pointer;
+
+	margin: 0px 5px;
+	border-radius: 12px;
+	padding: 5px;
+
+	font-size: 28px;
+
+	word-wrap: normal;
+	overflow: hidden;
+	text-overflow: ellipsis;
+
+	text-align: center;
+}
+
+	#name:hover {
+		background: var(--color-foreground-variant);
+	}
+
+	#name:active {
+		background: none;
+	}
+
+#tools {
+	grid-area: tools;
+
+	display: inline-flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+	#tools > button {
+		margin: 0px 5px;
+
+		width: 30px;
+		height: 30px;
+
+		font-size: 25px;
+
+		outline: none;
+		border: none;
+		border-radius: 12px;
+		
+		cursor: pointer;
+		user-select: none;
+
+		color: var(--color-text);
+		background: var(--color-foreground);
+	}
+
+	#tools > button:hover {
+		background: var(--color-foreground-variant);
+	}
+
+	#tools > button:active {
+		background: var(--color-foreground);
+	}
+
+#filter {
+	grid-area: filter;
+
+	height: 30px;
+	line-height: 30px;
+	font-size: 20px;
+
+	border: none;
+	border-radius: 15px;
+	padding: 0px 10px;
+	outline: none;
+
+	color: var(--color-text);
+	background: var(--color-foreground);
+	
+	resize: none;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+#contents {
+	grid-area: contents;
+
+	overflow-y: auto;
+	overflow-x: hidden;
+}
+
+.item {
+	display: grid;
+
+	white-space: nowrap;
+
+	margin: 0 10px 0 0;
+	border-radius: 10px;
+	padding: 10px 5px;
+
+	font-size: 18px;
+
+	gap: 5px;
+	grid:
+		"button text"
+		/ 20px 1fr;
+}
+
+	.item:hover {
+		background-color: var(--color-foreground);
+	}
+
+	.item::selection {
+		color: var(--color-primary);
+	}
+
+	.item > button {
+		grid-area: button;
+
+		height: 15px;
+		width: 15px;
+		border-radius: 30px;
+
+		place-self: center;
+
+		cursor: pointer;
+		outline: none;
+		border: none;
+
+		background: var(--color-foreground-variant);
+	}
+
+		.item > button:hover {
+			background: var(--color-primary);
+		}
+
+		.item > button:active {
+			background: var(--color-foreground-variant);
+		}
+
+	.item > div {
+		grid-area: text;
+
+		justify-self: start;
+		align-self: center;
+
+		width: 100%;
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		word-wrap: break-word;
+		overflow: hidden;
+	}
+
+.section {
+	margin-left: 5px;
+}
+
+	.section > summary {
+		white-space: nowrap;
+		
+		margin: 0 10px 0 0;
+		border-radius: 10px;
+		padding: 10px 5px;
+		
+		outline: none;
+
+		font-size: 18px;
+
+		list-style-type: none;
+	}
+
+		.section > summary:hover {
+			background-color: var(--color-foreground);
+		}
+
+		.section[open] > summary {
+			background: var(--color-foreground-variant);
+		}
+
+	.section > * > .section, .section > * > .item {
+		margin-left: 20px;
+	}

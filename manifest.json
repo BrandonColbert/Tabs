@@ -1,0 +1,38 @@
+{
+	"manifest_version": 2,
+	"name": "Tabs!",
+	"version": "0.1.0",
+	"description": "A Chrome extension to save and manage tabs.",
+	"incognito": "split",
+	"permissions": [
+		"activeTab",
+		"bookmarks",
+		"contextMenus",
+		"storage",
+		"tabs"
+	],
+	"background": {
+		"page": "html/tabs.html",
+		"presistent": false
+	},
+	"options_page": "html/settings.html",
+	"web_accessible_resources": [
+		"resources/**/*"
+	],
+	"browser_action": {
+		"default_title": "Tabs!",
+		"default_popup": "html/menu.html",
+		"default_icon": {
+			"16": "resources/images/icon16.png",
+			"32": "resources/images/icon32.png",
+			"48": "resources/images/icon48.png",
+			"128": "resources/images/icon128.png"
+		}
+	},
+	"icons": {
+		"16": "resources/images/icon16.png",
+		"32": "resources/images/icon32.png",
+		"48": "resources/images/icon48.png",
+		"128": "resources/images/icon128.png"
+	}
+}

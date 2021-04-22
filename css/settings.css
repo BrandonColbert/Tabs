@@ -1,0 +1,85 @@
+@import "./style.css";
+
+body {
+	background: var(--color-background);
+
+	margin: auto 15%;
+}
+
+input {
+	background: var(--color-foreground);
+	color: var(--color-text);
+	border: none;
+}
+
+.option-button {
+	display: block;
+
+	padding: 8px;
+
+	outline: none;
+	border: none;
+	border-radius: 12px;
+	
+	cursor: pointer;
+	user-select: none;
+
+	color: var(--color-text);
+	background: var(--color-foreground);
+
+	font-size: 16px;
+
+	margin: 0 0 15px 0;
+}
+
+	.option-button:hover {
+		background: var(--color-foreground-variant);
+	}
+
+	.option-button:active {
+		background: var(--color-foreground);
+	}
+
+#title {
+	display: inline-block;
+
+	font-size: 36px;
+
+	text-decoration: underline;
+
+	margin: 0px 0px 20px 0px;
+}
+
+#reload {
+	display: inline-block;
+
+	position: fixed;
+	top: 20px;
+	right: 20px;
+
+	width: 60px;
+	height: 60px;
+
+	font-size: 36px;
+}
+
+.options > div {
+	display: block;
+}
+
+	.options > div > * {
+		display: inline-block;
+	}
+
+	.options > div > :nth-child(1) {
+		width: 200px;
+
+		margin: 0 0 15px 0;
+
+		font-size: 18px;
+	}
+
+	.options > div > :nth-child(2) {
+		width: 200px;
+		padding: 5px 5px;
+	}

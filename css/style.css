@@ -1,0 +1,47 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans");
+@import "./dropdown.css";
+
+:root {
+	--color-primary: lightsalmon;
+	--color-primary-variant: salmon;
+	--color-accent: powderblue;
+	--color-accent-variant: lightblue;
+	--color-background: white;
+	--color-foreground: snow;
+	--color-foreground-variant: lavenderblush;
+	--color-text: black;
+}
+
+html {
+	font-family: 'Noto Sans', sans-serif;
+	color: var(--color-text);
+}
+
+.reorderTarget {
+	background: var(--color-accent) !important;
+}
+
+[type=text] {
+	color: var(--color-text);
+}
+
+::placeholder {
+	color: var(--color-text);
+	filter: opacity(70%);
+}
+
+::-webkit-scrollbar {
+	width: 15px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--color-foreground);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--color-foreground-variant);
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--color-primary);
+}

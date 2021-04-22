@@ -1,0 +1,76 @@
+{
+	"settings": {
+		"theme": {
+			"accent": "firebrick",
+			"accent-variant": "crimson",
+			"background": "#292e3e",
+			"foreground": "#252b3d",
+			"foreground-variant": "#2c3348",
+			"primary": "darkslateblue",
+			"primary-variant": "slateblue",
+			"text": "#e6dbdb"
+		},
+		"defaultExpandCount": 5,
+		"expandThreshold": 15,
+		"expandLimit": 30
+	},
+	"dividers": ["de194da0-746f-4376-aa53-9477c43db52b"],
+	"divider#de194da0-746f-4376-aa53-9477c43db52b": {
+		"name": "Misc",
+		"sections": [
+			{
+				"name": "Videos",
+				"sections": [
+					{
+						"name": "YouTube",
+						"sections": [],
+						"items": [
+							{
+								"title": "Linus Tech Tips",
+								"url": "https://www.youtube.com/c/LinusTechTips/videos"
+							},
+							{
+								"title": "Kurzgesagt – In a Nutshell",
+								"url": "https://www.youtube.com/c/inanutshell/videos"
+							}
+						]
+					},
+					{
+						"name": "Twitch",
+						"sections": [],
+						"items": []
+					}
+				],
+				"items": []
+			},
+			{
+				"name": "Articles",
+				"sections": [],
+				"items": [
+					{
+						"title": "Google News",
+						"url": "https://news.google.com"
+					}
+				]
+			}
+		],
+		"items": [
+			{
+				"title": "Google",
+				"url": "https://www.google.com"
+			},
+			{
+				"title": "Twitter",
+				"url": "https://www.twitter.com"
+			},
+			{
+				"title": "Reddit",
+				"url": "https://www.reddit.com"
+			},
+			{
+				"title": "Wikipedia",
+				"url": "https://www.wikipedia.org"
+			}
+		]
+	}
+}

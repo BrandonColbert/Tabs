@@ -1,2 +1,2 @@
 # Tabs
-A chrome extension to save and manage tabs.
+A Chrome extension to save and manage tabs.
