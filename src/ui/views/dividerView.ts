@@ -171,19 +171,9 @@ export default class DividerView extends Divider implements View {
 	}
 
 	public async expandRight(): Promise<void> {
-		function countItems(section: Section): number {
-			let count = section.items.length
-
-			if(section.sections)
-				for(let s of section.sections)
-					count += countItems(s)
-
-			return count
-		}
-
 		let settings = await Tabs.getSettings()
 		let section = await this.getMainSection()
-		let itemCount = countItems(section)
+		let itemCount = section.items.length
 
 		let count = Math.min(itemCount, settings.defaultExpandCount)
 
@@ -207,6 +197,7 @@ export default class DividerView extends Divider implements View {
 		if(settings.expandThreshold > 0 && count > settings.expandThreshold && !confirm(`Are you sure you want to open ${count} new tabs?`))
 			return
 
-		//TODO Implement
+		for(let i = 0; i < count; i++)
+			await this.expand([[], 0], false, true)
 	}
 }

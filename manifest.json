@@ -1,8 +1,9 @@
 {
 	"manifest_version": 2,
 	"name": "Tabs!",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "A Chrome extension to save and manage tabs.",
+	"author": "Brandon Colbert",
 	"incognito": "split",
 	"permissions": [
 		"activeTab",

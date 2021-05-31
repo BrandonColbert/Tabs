@@ -1,17 +1,17 @@
 import Filter from "./filter.js"
 import {Item} from "../divider.js"
-import simplifyString from "../utils/simplifyString.js"
+import Text from "../utils/text.js"
 
 export default class SetFilter implements Filter {
 	public readonly description: string = "Matches when all of the space separated terms are found in the title"
 	private terms: string[]
 
 	public constructor(query: string) {
-		this.terms = simplifyString(query).split(" ")
+		this.terms = Text.simplify(query).split(" ")
 	}
 
 	public match(item: Item, _: string[]): boolean {
-		let title = simplifyString(item.title)
+		let title = Text.simplify(item.title)
 
 		for(let term of this.terms) {
 			if(term.startsWith("-")) {

@@ -2,7 +2,7 @@ import Divider from "./divider.js"
 import Tabs from "./tabs.js"
 import DDListElement from "./ui/ddListElement.js"
 import DividerElement from "./ui/elements/dividerElement.js"
-import simplifyString from "./utils/simplifyString.js"
+import Text from "./utils/text.js"
 
 Tabs.applyTheme()
 DDListElement.define()
@@ -44,10 +44,10 @@ async function setup(): Promise<void> {
 		let names = await Promise.all(dividers.map(d => d.getName()))
 
 		do {
-			let q = simplifyString(query)
+			let q = Text.simplify(query)
 
 			for(let n of names) {
-				if(!simplifyString(n).startsWith(q))
+				if(!Text.simplify(n).startsWith(q))
 					continue
 
 				dividers[names.indexOf(n)].open(true)

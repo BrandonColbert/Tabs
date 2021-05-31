@@ -1,26 +1,11 @@
 {
-	"name": "tabs",
-	"version": "0.1.0",
-	"description": "A Chrome extension to save and manage tabs.",
-	"author": "Brandon Colbert",
-	"license": "UNLICENSED",
-	"main": "js/tabs.js",
-	"homepage": "https://github.com/BrandonColbert/Tabs#readme",
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/BrandonColbert/Tabs.git"
-	},
-	"bugs": {
-		"url": "https://github.com/BrandonColbert/Tabs/issues"
-	},
+	"private": "true",
 	"scripts": {
 		"build": "tsc",
 		"watch": "tsc -w",
-		"clean": "del \\S js"
+		"clean": "rmdir js /S /Q"
 	},
 	"devDependencies": {
-		"@types/chrome": "0.0.133",
-		"typescript": "^4.2.3"
-	},
-	"dependencies": {}
+		"@types/chrome": "0.0.133"
+	}
 }

@@ -18,6 +18,7 @@ export default class SectionElement {
 	private itemElements: ItemElement[] = []
 
 	#section: Section
+	#lastFilter: Filter
 
 	public constructor(divider: Divider, element: HTMLElement)
 	public constructor(parentElement: SectionElement)
@@ -61,6 +62,8 @@ export default class SectionElement {
 	}
 
 	public filterContents(filter: Filter): void {
+		this.#lastFilter = filter
+
 		if(!filter) {
 			this.showAll()
 			return
@@ -137,6 +140,7 @@ export default class SectionElement {
 
 		await this.populateSections(path)
 		this.populateItems(path)
+		this.filterContents(this.#lastFilter)
 	}
 
 	private async populateSections(path: number[]): Promise<void> {
