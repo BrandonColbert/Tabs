@@ -1,18 +1,20 @@
-import Generate from "./utils/generate.js"
 import GlobalDispatcher from "./utils/globalDispatcher.js"
 type Tab = chrome.tabs.Tab
-export type Route = [number[], number]
+
+//@ts-ignore
+import {v4 as uuidv4} from "/resources/scripts/uuid.js"
+type uuidv4 = () => string
 
 /**
  * Stores information about tabs
  */
-export default class Divider {
+export class Divider {
 	public readonly id: string
 	public readonly events: GlobalDispatcher<Events>
 
 	protected constructor(id: string) {
 		this.id = id
-		this.events = new GlobalDispatcher<Events>(this.storageKey, ["changeContents", "delete", "rename", "reorder"])
+		this.events = new GlobalDispatcher<Events>(this.storageKey, "changeContents", "delete", "rename", "reorder")
 	}
 
 	private get storageKey() { return `divider#${this.id}` }
@@ -45,7 +47,7 @@ export default class Divider {
 	/**
 	 * @return The primary section of the divider
 	 */
-	public async getMainSection(): Promise<Section> {
+	public async getMainSection(): Promise<Divider.Section> {
 		let result = await new Promise<{[key: string]: any}>(r => chrome.storage.local.get(
 			this.storageKey,
 			items => r(items)
@@ -54,7 +56,7 @@ export default class Divider {
 		return result[this.storageKey]
 	}
 
-	public async setMainSection(value: Section): Promise<void> {
+	public async setMainSection(value: Divider.Section): Promise<void> {
 		//Update main section
 		await new Promise<void>(r => chrome.storage.local.set(
 			{[this.storageKey]: value},
@@ -96,7 +98,7 @@ export default class Divider {
 	public async compress(predicate: (currentTab: Tab, tab: Tab) => boolean): Promise<void>
 
 	public async compress(par1: any = null): Promise<void> {
-		function extractItem(tab: Tab): Item {
+		function extractItem(tab: Tab): Divider.Item {
 			let item = {
 				title: "[Unknown]",
 				url: tab.url,
@@ -156,12 +158,12 @@ export default class Divider {
 	 * @param direct Whether to update the page or open in a new tab
 	 * @param destructive Whether to remove the item from the divider
 	 */
-	public async expand(route: Route, direct: boolean, destructive: boolean): Promise<void> {
+	public async expand(route: Divider.Route, direct: boolean, destructive: boolean): Promise<void> {
 		let [path, index] = route
 
 		let mainSection = await this.getMainSection()
 		let section = path.reduce((s, i) => s.sections[i], mainSection)
-		let item: Item = null
+		let item: Divider.Item = null
 
 		if(destructive)
 			[item] = section.items.splice(index, 1)
@@ -244,7 +246,7 @@ export default class Divider {
 		//Remove contents
 		await new Promise<void>(r => chrome.storage.local.remove(this.storageKey, () => r()))
 
-		this.events.fire("delete", {index: index})
+		await this.events.fire("delete", {index: index})
 	}
 
 	/**
@@ -276,7 +278,7 @@ export default class Divider {
 	}
 
 	/**
-	 * Loads a divider by name
+	 * Loads a divider by id
 	 * @param id Id of the divider
 	 * @returns The divider with the associated id if it exists, otherwise null
 	 */
@@ -307,7 +309,7 @@ export default class Divider {
 			return null
 
 		//Add the id and update storage
-		let id = Generate.uuid()
+		let id = uuidv4()
 
 		let ids = await Divider.all()
 		ids.push(id)
@@ -355,27 +357,34 @@ export default class Divider {
 	}
 }
 
-export interface Section {
-	/** Name of this section */
-	name: string
+export default Divider
 
-	/** Subsections containing more items */
-	sections: Section[]
+export namespace Divider {
+	export type Route = [number[], number]
 
-	/** Items in this subsection */
-	items: Item[]
+	export interface Section {
+		/** Name of this section */
+		name: string
+	
+		/** Subsections containing more items */
+		sections: Section[]
+	
+		/** Items in this subsection */
+		items: Item[]
+	}
+	
+	export interface Item {
+		/** Item name */
+		title: string
+	
+		/** Address of the page */
+		url: string
+	
+		/** Time when the page was compressed */
+		time?: number
+	}
 }
 
-export interface Item {
-	/** Item name */
-	title: string
-
-	/** Address of the page */
-	url: string
-
-	/** Time when the page was compressed */
-	time?: number
-}
 
 interface Events {
 	/** Called when the divider receives a new name */

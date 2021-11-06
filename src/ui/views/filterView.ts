@@ -1,6 +1,7 @@
-import Dispatcher from "../../utils/dispatcher.js"
+import {Dispatcher} from "/resources/lib/cobrasu/core.js"
 import Filter from "../../filters/filter.js"
 import LinearFilter from "../../filters/linearFilter.js"
+import StandardFilter from "../../filters/standardFilter.js"
 
 type FilterConstructor = new(query: string) => Filter
 
@@ -13,7 +14,7 @@ export default class FilterView implements View {
 
 	public constructor(element: HTMLTextAreaElement) {
 		this.#element = element
-		this.events = new Dispatcher<Events>(["changeQuery"])
+		this.events = new Dispatcher<Events>("changeQuery")
 		this.refresh()
 
 		element.onkeydown = e => {
@@ -39,10 +40,8 @@ export default class FilterView implements View {
 	}
 
 	private refresh(): void {
-		this.#filter = null
-		this.#element.style.color = null
-
 		let input = this.#element.value
+		let Constructor: FilterConstructor
 
 		if(input.startsWith(":")) {
 			input = input.substring(1)
@@ -52,18 +51,20 @@ export default class FilterView implements View {
 			if(filterName.length == 0 || !FilterView.filters.has(filterName))
 				return
 
-			try {
-				let FilterConstructor = FilterView.filters.get(filterName)
-				this.#filter = new FilterConstructor(this.query)
-				this.#element.style.color = "var(--color-primary-variant)"
-			} catch(_) {
-				this.#element.style.color = "var(--color-accent-variant)"
-			}
+			Constructor = FilterView.filters.get(filterName)		
+			this.#element.style.color = "var(--color-primary-variant)"	
 		} else {
 			this.query = input
 
-			if(input.length > 0)
-				this.#filter = new LinearFilter(this.query)
+			Constructor = input.length > 0 ? StandardFilter : null
+			this.#element.style.color = null
+		}
+
+		try {
+			this.#filter = Constructor ? new Constructor(this.query) : null
+		} catch(_) {
+			this.#filter = null
+			this.#element.style.color = "var(--color-accent-variant)"
 		}
 
 		this.element.title = this.#filter?.description ?? ""

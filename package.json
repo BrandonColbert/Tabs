@@ -2,8 +2,8 @@
 	"private": "true",
 	"scripts": {
 		"build": "tsc",
-		"watch": "tsc -w",
-		"clean": "rmdir js /S /Q"
+		"clean-linux": "./scripts/linux/clean.sh",
+		"clean-win": "scripts\\windows\\clean.bat"
 	},
 	"devDependencies": {
 		"@types/chrome": "0.0.133"

@@ -28,7 +28,7 @@ export default class Tabs {
 					clearTimeout(timeout)
 
 				let target = e.target as HTMLInputElement
-				let [file] = target.files				
+				let [file] = Array.from(target.files)
 				target.remove()
 
 				let reader = new FileReader()

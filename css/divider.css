@@ -215,15 +215,16 @@ body {
 }
 
 	.section > summary {
-		white-space: nowrap;
-		
 		margin: 0 10px 0 0;
 		border-radius: 10px;
 		padding: 10px 5px;
 		
 		outline: none;
-
+		
 		font-size: 18px;
+		text-decoration: solid underline var(--color-primary) 2px;
+		text-underline-offset: 3px;
+		white-space: nowrap;
 
 		list-style-type: none;
 	}

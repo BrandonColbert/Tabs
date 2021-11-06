@@ -1,20 +1,28 @@
 {
 	"compilerOptions": {
 		"target": "ESNext",
+		"module": "ESNext",
+		"lib": ["DOM", "ESNext"],
 		"rootDir": "src",
 		"outDir": "js",
 		"baseUrl": ".",
 		"paths": {
-			"*": ["node_modules/*"]
+			"/js/*": ["./src/*"],
+			"/resources/lib/*": ["./resources/lib/*"]
 		},
 		"inlineSourceMap": true,
 		"inlineSources": true,
-		"noImplicitAny": true,
-		"noImplicitReturns": true,
+		"useDefineForClassFields": true,
 		"esModuleInterop": true,
 		"experimentalDecorators": true,
-		"removeComments": false,
-		"strict": false
+		"emitDecoratorMetadata": true,
+		"allowSyntheticDefaultImports": true,
+		"importsNotUsedAsValues": "preserve",
+		"strict": false,
+		"noImplicitAny": true,
+		"noImplicitThis": true,
+		"noImplicitOverride": true,
+		"noImplicitReturns": true
 	},
 	"include": [
 		"src/**/*"

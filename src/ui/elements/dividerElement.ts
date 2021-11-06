@@ -1,5 +1,7 @@
+import * as cobrasu from "/resources/lib/cobrasu/core.js"
 import Divider from "../../divider.js"
-import Dropdown from "../dropdown.js"
+
+const {Dropdown} = cobrasu.DOM
 
 export default class DividerElement extends Divider {
 	public readonly element: HTMLElement

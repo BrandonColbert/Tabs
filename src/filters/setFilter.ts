@@ -1,6 +1,6 @@
+import {Text} from "/resources/lib/cobrasu/core.js"
 import Filter from "./filter.js"
-import {Item} from "../divider.js"
-import Text from "../utils/text.js"
+import Divider from "../divider.js"
 
 export default class SetFilter implements Filter {
 	public readonly description: string = "Matches when all of the space separated terms are found in the title"
@@ -10,7 +10,7 @@ export default class SetFilter implements Filter {
 		this.terms = Text.simplify(query).split(" ")
 	}
 
-	public match(item: Item, _: string[]): boolean {
+	public match(item: Divider.Item, _: string[]): boolean {
 		let title = Text.simplify(item.title)
 
 		for(let term of this.terms) {

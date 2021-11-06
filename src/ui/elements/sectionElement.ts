@@ -1,8 +1,9 @@
-import DDListElement from "../ddListElement.js"
-import Divider, {Section} from "../../divider.js"
+import * as cobrasu from "/resources/lib/cobrasu/core.js"
+import Divider from "../../divider.js"
 import ItemElement from "./itemElement.js"
 import Filter from "../../filters/filter.js"
-import Dropdown from "../dropdown.js"
+
+const {Dropdown} = cobrasu.DOM
 
 export default class SectionElement {
 	public readonly divider: Divider
@@ -10,14 +11,14 @@ export default class SectionElement {
 	private parentElement: SectionElement
 
 	//Section management
-	private sectionContainer: DDListElement
+	private sectionContainer: cobrasu.DOM.DDListElement
 	private sectionElements: SectionElement[] = []
 
 	//Item management
-	private itemContainer: DDListElement
+	private itemContainer: cobrasu.DOM.DDListElement
 	private itemElements: ItemElement[] = []
 
-	#section: Section
+	#section: Divider.Section
 	#lastFilter: Filter
 
 	public constructor(divider: Divider, element: HTMLElement)
@@ -43,7 +44,7 @@ export default class SectionElement {
 		}
 	}
 
-	public get section(): Section { return this.#section }
+	public get section(): Divider.Section { return this.#section }
 
 	public showAll(): void {
 		for(let sectionElement of this.sectionElements)
@@ -61,16 +62,20 @@ export default class SectionElement {
 			itemElement.hide()
 	}
 
-	public filterContents(filter: Filter): void {
+	public filterContents(filter: Filter): boolean {
+		let matchExists = false
+
 		this.#lastFilter = filter
 
 		if(!filter) {
 			this.showAll()
-			return
+			return false
 		}
 
-		for(let sectionElement of this.sectionElements)
-			sectionElement.filterContents(filter)
+		for(let sectionElement of this.sectionElements) {
+			let result = sectionElement.filterContents(filter)
+			matchExists ||= result
+		}
 
 		let pathNames: string[] = []
 
@@ -81,11 +86,17 @@ export default class SectionElement {
 		}
 
 		for(let itemElement of this.itemElements) {
-			if(filter.match(itemElement.item, pathNames))
+			if(filter.match(itemElement.item, pathNames)) {
 				itemElement.show()
-			else
+				matchExists = true
+			} else
 				itemElement.hide()
 		}
+
+		if(this.element instanceof HTMLDetailsElement)
+			this.element.open = matchExists
+
+		return matchExists
 	}
 
 	public async assignSection(path: number[]): Promise<void> {
@@ -99,6 +110,19 @@ export default class SectionElement {
 				e.preventDefault()
 
 				Dropdown.show([
+					{text: "Collapse", callback: () => {
+						function collapse(section: SectionElement): void {
+							for(let subsection of section.sectionElements)
+								collapse(subsection)
+
+							if(!(section.element instanceof HTMLDetailsElement))
+								return
+
+							section.element.open = false
+						}
+
+						collapse(this)
+					}},
 					{text: "Add subsection", callback: async () => {
 						;(this.element as HTMLDetailsElement).open = true
 
@@ -147,7 +171,7 @@ export default class SectionElement {
 		let container = this.sectionContainer
 
 		if(!container) {
-			container = document.createElement("dd-list") as DDListElement
+			container = document.createElement("dd-list") as cobrasu.DOM.DDListElement
 			this.sectionContainer = container
 
 			container.classList.add("sections")
@@ -164,7 +188,7 @@ export default class SectionElement {
 			container.append(se.element)
 		}
 
-		let children = [...container.children]
+		let children = Array.from(container.children)
 		await Promise.all(
 			this.sectionElements
 				.map(se => se.assignSection([...path, children.indexOf(se.element)]))
@@ -224,7 +248,7 @@ export default class SectionElement {
 		let container = this.itemContainer
 
 		if(!container) {
-			container = document.createElement("dd-list") as DDListElement
+			container = document.createElement("dd-list") as cobrasu.DOM.DDListElement
 			this.itemContainer = container
 
 			container.classList.add("items")
@@ -241,7 +265,7 @@ export default class SectionElement {
 			container.append(ie.element)
 		}
 
-		let children = [...container.children]
+		let children = Array.from(container.children)
 		for(let itemElement of this.itemElements)
 			itemElement.assignItem([path, children.indexOf(itemElement.element)])
 

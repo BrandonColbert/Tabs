@@ -6,10 +6,9 @@ import NotFilter from "./filters/notFilter.js"
 import UrlFilter from "./filters/urlFilter.js"
 import RegexFilter from "./filters/regexFilter.js"
 import FilterView from "./ui/views/filterView.js"
-import DDListElement from "./ui/ddListElement.js"
+import LinearFilter from "./filters/linearFilter.js"
 
 Tabs.applyTheme()
-DDListElement.define()
 
 let view: DividerView = null
 
@@ -46,6 +45,7 @@ FilterView.addFilter("set", SetFilter)
 FilterView.addFilter("not", NotFilter)
 FilterView.addFilter("url", UrlFilter)
 FilterView.addFilter("regex", RegexFilter)
+FilterView.addFilter("linear", LinearFilter)
 
 setup()
 window.addEventListener("hashchange", () => setup())

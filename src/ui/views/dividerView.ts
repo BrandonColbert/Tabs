@@ -1,8 +1,10 @@
-import Divider, {Section} from "../../divider.js"
-import Dropdown from "../dropdown.js"
+import * as cobrasu from "/resources/lib/cobrasu/core.js"
+import Divider from "../../divider.js"
 import FilterView from "./filterView.js"
 import Tabs from "../../tabs.js"
 import SectionElement from "../elements/sectionElement.js"
+
+const {Dropdown} = cobrasu.DOM
 
 export default class DividerView extends Divider implements View {
 	public readonly element: HTMLElement
@@ -48,7 +50,7 @@ export default class DividerView extends Divider implements View {
 				await this.setMainSection(mainSection)
 			}},
 			{text: "Save as text", callback: async () => {
-				function stringify(section: Section): string {
+				function stringify(section: Divider.Section): string {
 					let text = `${section.name}:\n`
 
 					for(let s of section.sections) {
@@ -80,7 +82,7 @@ export default class DividerView extends Divider implements View {
 			{text: "Create bookmark folder", callback: async () => {
 				type Node = chrome.bookmarks.BookmarkTreeNode
 
-				async function mark(section: Section, parentId: string = null): Promise<Node> {
+				async function mark(section: Divider.Section, parentId: string = null): Promise<Node> {
 					let folder = await new Promise<Node>(r => {
 						chrome.bookmarks.create({
 							title: section.name,

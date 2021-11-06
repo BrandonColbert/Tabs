@@ -1,14 +1,14 @@
+import * as cobrasu from "/resources/lib/cobrasu/core.js"
 import Divider from "./divider.js"
 import Tabs from "./tabs.js"
-import DDListElement from "./ui/ddListElement.js"
 import DividerElement from "./ui/elements/dividerElement.js"
-import Text from "./utils/text.js"
+
+const {Text} = cobrasu
 
 Tabs.applyTheme()
-DDListElement.define()
 
 async function setup(): Promise<void> {
-	let dividers = document.querySelector("#dividers") as DDListElement
+	let dividers = document.querySelector("#dividers") as cobrasu.DOM.DDListElement
 
 	dividers.events.on("reorder", async e => {
 		let ids = await Divider.all()
